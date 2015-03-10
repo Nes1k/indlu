@@ -1,0 +1,10 @@
+Django==1.7.5
+Pillow==2.7.0
+defusedxml==0.4.1
+django-allauth==0.19.1
+geopy==1.9.1
+oauthlib==0.7.2
+psycopg2==2.6
+python3-openid==3.0.5
+requests==2.5.3
+requests-oauthlib==0.4.2

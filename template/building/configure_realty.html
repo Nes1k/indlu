@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+	{{ title }}
+{% endblock title %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-6 {% if add %}col-lg-offset-3{% endif %}">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Ogólne dane nieruchomości</h5>
+            </div>
+            <div class="ibox-content">
+                <form action="" method="POST" role="form">{% csrf_token %}
+                {% for field in form  %}
+                    <div class="row">
+                        <label class="col-sm-4">{{field.label}}</label>
+                        <div class="col-sm-8">
+                            {{field}}
+                        </div>
+                    </div>
+                    <hr>
+                {% endfor %}
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <a href="{% url 'all_building' %}" class="btn btn-white btn-block">Anuluj</a>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="submit" class="btn btn-primary btn-block">Zapisz</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+   {% if not add %}
+    <div class="col-lg-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Pomieszczenia</h5>
+            </div>
+            <div class="ibox-content">
+            {% for room  in building.rooms_set.all  %}
+                <div class="row">
+                    <div class="col-sm-4">
+                    {% if room.get_image_url %}
+                        <img src="{{room.get_image_url}}" alt="Image" class="img-responsive img-rounded">
+                    {% endif %}
+                    </div>
+                    <div class="col-sm-5">
+                        {{room.name}}
+                    </div>
+                    <div class="col-sm-3">
+                        <button class="btn btn-danger btn-circle pull-right"><i class="fa fa-times"></i></button>
+                        <a href="{% url 'edit_room' building.id room.id %}">
+                            <button class="btn btn-info btn-circle pull-right"><i class="fa fa-pencil"></i></button>
+                        </a>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="{% url 'add_room' building.id %}" class="btn btn-success btn-circle pull-right">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+   {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>{% block title %}{% endblock title %}</title>
+
+	<link href="{% static "inspinia/css/bootstrap.min.css" %}" rel="stylesheet">
+	<link href="{% static "inspinia/font-awesome/css/font-awesome.css" %}" rel="stylesheet">
+
+	<link href="{% static "inspinia/css/animate.css" %}" rel="stylesheet">
+	<link href="{% static "inspinia/css/style.css" %}" rel="stylesheet">
+
+</head>
+<body class="gray-bg">
+
+	{% block content %}{% endblock content %}
+
+	<script src="{% static "inspinia/js/jquery-2.1.1.js" %}"></script>
+	<script src="{% static "inspinia/js/bootstrap.min.js" %}"></script>
+
+	{% block script %}{% endblock script %}
+</body>
+</html>

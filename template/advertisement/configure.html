@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Dane do ogłoszenia</h5>
+            </div>
+            <div class="ibox-content">
+            	<div class="row">
+					<label class="col-sm-12 text-center">Podstawowe dane kontaktowe</label>
+            	</div>
+            	<hr>
+                <form action="" method="POST" role="form">{% csrf_token %}
+					{% for field in primarycontact_form  %}
+						<div class="row">
+							<label class="col-sm-4">{{field.label}}</label>
+							<div class="col-sm-8">{{field}}</div>
+						</div>
+					{% endfor %}
+					<hr>
+					<div class="row">
+						<div class="col-sm-12">
+							{% if form.non_field_errors %}
+								<div class="alert alert-danger">{{form.non_field_errors}}</div>
+							{% endif %}
+						</div>
+					</div>
+					{% for field in form %}
+						<div class="row">
+							<label class="col-sm-4">{{field.label}} </label>
+							<div class="col-sm-8">{{ field }}</div>
+						</div>
+					{% endfor %}
+					<hr>
+					<div class="row">
+						<div class="col-sm-6">
+							<a href="{% url 'manage_building' building_id %}" class="btn btn-default btn-block">Anuluj</a>
+						</div>
+						<div class="col-sm-6">
+							<input type="submit" class="btn btn-primary btn-block" value="Zapisz">
+						</div>
+					</div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

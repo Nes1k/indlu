@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="contact-box">
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                        Złóż ofertę
+                    </button>
+                    <a href="{% url 'add_favourites' advertisement.id %}">
+                        <button class="btn btn-danger btn-circle pull-right">
+                            <i class="fa fa-heart"></i>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-6 b-r" id="carousel">
+                    <div class="text-center">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                {% for image in advertisement.get_images_url   %}
+                                    <li data-target="#carousel-example-generic" data-slide-to="forloop.counter0" class="{% if forloop.first %}active{% endif %}"></li> 
+                                {% endfor %}
+                            </ol>
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                {% for image in advertisement.get_images_url  %}
+                                    <div class="item {% if forloop.first %}active{% endif %}">
+                                        <img src="{{ image }}" alt="...">
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div id="map"></div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <label class=" col-sm-12 text-center">Informacje ogólne</label>
+                    <p>
+                        Wolnych miejsc : {{ advertisement.free_places }} <br>
+                        Powierzchni: {{advertisement.building.area}} (m^2) <br>
+                        Cena: {{ advertisement.price }}zł. <br>
+                        Płatność {{ advertisement.payment| lower }}
+                    </p>
+                    {% for room in advertisement.building.rooms_set.all  %}
+                    {% if room.rooms_type != '2' %}
+                    <h5>Pokój {{forloop.counter}}</h5>
+                    Wolnych miejsc w pokoju: {{room.free_places}}
+                    {% endif %}
+                    <ul class="list-inline">
+                    <li>Wyposarzenie:</li>
+                    {% for item in room.equipment.all  %}
+                    <li>{{item}},</li>
+                    {% endfor %}                                            
+                    </ul>
+                    </p>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-6 b-l">
+                    <label class=" col-sm-12 text-center">Wiadomośc do właściciela</label>
+                    <input type="text" class="form-control" placeholder="Wpisz temat wiadomości">
+                    <br>
+                    <textarea class="form-control" rows="7" placeholder="Tu wpisz wiadomość"></textarea>
+                    <br>
+                    <button type="button" class="btn btn-primary">Wyślij</button>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="panelChart4" class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">Ceny mieszkań w {{advertisement.building.city}}</div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="chart-line flot-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Oferta</h4>
+            </div>
+            <div class="modal-body text-center">
+                <p>Zgadzam się na złorzenie oferty.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Zamknij</button>
+                <a href="{% url 'add_offer' advertisement.id %}" class="btn btn-primary">Akceptuję</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+  (function(window, document, $, undefined){
+
+  $(function(){
+
+    var data = [{
+        "label": "Średnia Cen",
+        "color": "#5ab1ef",
+        "data": [
+        {% for stat in stats  %}
+          ["{{stat.time|date:"H:i:s"}}", {{stat.average_price}}],
+        {% endfor %}
+        ]
+    }, {
+        "label": "Najwyższa cena",
+        "color": "#d87a80",
+        "data": [
+        {% for stat in stats  %}
+          ["{{stat.time|date:"H:i:s"}}", {{stat.max_price}}],
+        {% endfor %}
+        ]
+    }, {
+        "label": "Najniższa cena",
+        "color": "#f5994e",
+        "data": [
+        {% for stat in stats  %}
+          ["{{stat.time|date:"H:i:s"}}", {{stat.min_price}}],
+        {% endfor %}
+        ]
+    }];
+
+    var options = {
+                    series: {
+                        lines: {
+                            show: true,
+                            fill: 0.01
+                        },
+                        points: {
+                            show: true,
+                            radius: 4
+                        }
+                    },
+                    grid: {
+                        borderColor: '#eee',
+                        borderWidth: 1,
+                        hoverable: true,
+                        backgroundColor: '#fcfcfc'
+                    },
+                    tooltip: true,
+                    tooltipOpts: {
+                        content: '%x : %y'
+                    },
+                    xaxis: {
+                        tickColor: '#eee',
+                        mode: 'categories'
+                    },
+                    yaxis: {
+                        // position: 'right' or 'left'
+                        tickColor: '#eee'
+                    },
+                    shadowSize: 0
+                };
+
+    var chart = $('.chart-line');
+    if(chart.length)
+      $.plot(chart, data, options);
+
+  });
+
+})(window, document, window.jQuery);
+</script>
+     <!-- FLOT CHART-->
+   <script src="{% static "vendor/flot/jquery.flot.js" %}"></script>
+   <script src="{% static "vendor/flot/jquery.flot.resize.js" %}"></script>
+   <script src="{% static "vendor/flot/jquery.flot.pie.js" %}"></script>
+   <script src="{% static "vendor/flot/jquery.flot.time.js" %}"></script>
+   <script src="{% static "vendor/flot/jquery.flot.categories.js" %}"></script>
+
+
+
+<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<script src="https://hpneo.github.io/gmaps/gmaps.js"></script>
+<script>
+    var map;
+
+     $(function () {
+            map = new GMaps({
+                div: '#map',
+                lat:  '{{advertisement.building.location.x}}'.replace(',', '.'),
+                lng: '{{advertisement.building.location.y}}'.replace(',', '.'),
+            });
+            $("#map").css("height", $("#carousel").css("height"));
+            map.addMarker({
+                    lat: '{{advertisement.building.location.x}}'.replace(',', '.'),
+                lng: '{{advertisement.building.location.y}}'.replace(',', '.'),
+                title: 'Dom',
+            })
+    });
+
+</script>
+{% endblock script %}

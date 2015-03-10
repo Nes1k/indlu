@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}	{% endblock title %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Miejsce preferencje</h5>
+            </div>
+            <div class="ibox-content">
+                <form action="" method="POST" role="form">{% csrf_token %}
+                {% for field in form  %}
+                    <div class="row">
+                        <label class="col-sm-4">{{field.label}}</label>
+                        <div class="col-sm-8">
+                            {{field}}
+                        </div>
+                    </div>
+                    <hr>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a href="{% url 'search_panel' %}" class="btn btn-white btn-block">Anuluj</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="submit" class="btn btn-primary btn-block">Zapisz</button>  
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

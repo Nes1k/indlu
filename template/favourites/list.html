@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}	{% endblock title %}
+{% block content %}
+ <div class="row">
+ {% for add in favourites.advertisement.all   %}
+ 	<div class="col-sm-12 col-md-6 col-lg-4">
+ 		<div class="thumbnail">
+ 			<a href="{% url 'profile_advertisement' add.id %}"><img src="{{ MEDIA_URL }}{{ add.image.image }}" alt=""></a>
+ 			<div class="caption">
+ 				<h4>{{ add.estate.city }} <h5>{{ add.estate.street_address }} </h5></h4>
+ 				<p>
+ 					Wolnych miejsc : {{ add.free_places }} <br>
+ 					Cena: {{ add.price }}zł. <br>
+ 					Płatność {{ add.payment| lower }}
+ 					<button class="btn btn-info btn-circle pull-right" type="button"><i class="fa fa-check"></i></button>
+ 					<a href="{% url 'delete_favourites' add.id %}" class="btn btn-warning btn-circle pull-right b-r" role="button"><i class="fa fa-times"></i></a></p>
+ 				</p>
+ 			</div>
+ 		</div>
+ 	</div>
+ {% empty %}
+ 	<div class="row">
+    <div class="col-xs-12 text-center">
+        <h2 class="text-thin">Jeszcze nie dodałeś żadnych mieszkań do listy ulubionych.</h2>
+        <p>
+        	Dodaj mieszkania do listy ulubionych aby móc je później łatwo znaleźć.<br><br>
+        </p>
+    </div>
+	</div>
+ {% endfor %}
+</div>
+{% endblock content %}

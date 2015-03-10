@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}
+	{{ title }}
+{% endblock title %}
+
+{% block content %}
+ <div class="row">
+ 	<div class="jumbotron white-bg">	
+	<form action="" method="GET" role="form">
+		<div class="row">
+			{% for field in form  %}
+				<div class="col-xs-6 col-sm-3">
+					<label>{% if forloop.counter == 1 %}<i class="fa fa-location-arrow"></i>{% endif %}{{field.label}} </label>
+					{{field}}
+				</div>
+			{% endfor %}
+				<div class="col-xs-6 col-sm-3">
+					<label></label>
+					<button type="submit" class="btn btn-info btn-block">Szukaj</button>
+				</div>	
+ 		</div>
+	</form>
+</div>
+</div>
+ <hr>
+ <div class="row">
+ {% for add in advertisement   %}
+ 	<div class="col-sm-12 col-md-6 col-lg-4">
+ 		<div class="thumbnail">
+ 			<a href="{% url 'profile_advertisement' add.id %}"><img src="{{ MEDIA_URL }}{{ add.image.image }}" alt="">
+ 			</a>
+ 			<div class="caption">
+ 				<h4>{{ add.building.city }} <h5>{{ add.building.street_address }} </h5></h4>
+ 				<p>
+ 					Wolnych miejsc : {{ add.free_places }} <br>
+ 					Cena: {{ add.price }}zł. <br>
+ 					Płatność {{ add.payment| lower }}
+ 					<button class="btn btn-info btn-circle pull-right" type="button"><i class="fa fa-check"></i></button>
+ 					<a href="{% url 'add_favourites' add.id %}" class="btn btn-danger btn-circle pull-right b-r" role="button"><i class="fa fa-heart"></i></a></p>
+ 				</p>
+ 			</div>
+ 		</div>
+ 	</div>
+ {% empty %}
+ 	<div class="row">
+    <div class="col-xs-12 text-center">
+        <h2 class="text-thin">Niestety nie posiadamy mieszkań o tych kryteriach.</h2>
+        <p>
+        	Spróbuj znaleźć mieszkanie wprowadzająć inne kryteria.<br><br>
+        </p>
+    </div>
+</div>
+ {% endfor %}
+</div>
+{% endblock %}
+	

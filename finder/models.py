@@ -1,0 +1,47 @@
+# -*- coding: utf-8 -*-
+from django.db import models
+from django.conf import settings
+from django.contrib.gis.db import models as gis_models
+
+from geopy import geocoders
+
+from advertisement.models import RATE_OF_PAY
+from building.models import BUILDING_TYPE
+
+PLACES = ((1, 1), (2, 2), (3, 3), (4, 4), (5, 'więcej'))
+
+
+class Preferences(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, default=1)
+    city = models.CharField(max_length=120, blank=True, null=True)
+    places = models.IntegerField(
+        default=0, blank=True, null=True, choices=PLACES)
+    buidling_type = models.CharField(
+        max_length=120, choices=BUILDING_TYPE, blank=True, null=True)
+    payment = models.CharField(
+        max_length=120, choices=RATE_OF_PAY, blank=True, null=True)
+    min_price = models.IntegerField(blank=True, null=True)
+    max_price = models.IntegerField(blank=True, null=True)
+
+
+class Place(models.Model):
+    preferences = models.ForeignKey(Preferences)
+    city = models.CharField(max_length=120, blank=True, null=True)
+    street = models.CharField(max_length=120, blank=True, null=True)
+    distance = models.DecimalField(default=0, max_digits=4, decimal_places=2)
+    location = gis_models.PointField(
+        'longitude/latitude', geography=True, blank=True, null=True)
+
+    gis = gis_models.GeoManager()
+    objects = models.Manager()
+
+    def save(self, *args, **kwargs):
+        g = geocoders.GoogleV3(domain='maps.google.pl')
+        location = g.geocode('%s, %s' % (self.city, self.street))
+        if location is not None:
+            point = "POINT (%s %s)" % (location.latitude, location.longitude)
+            self.location = point
+        super(Place, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.city

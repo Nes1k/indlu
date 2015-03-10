@@ -1,0 +1,35 @@
+{% extends "account/base.html" %}
+{% block title %}Indlu.pl - rejestracja.{% endblock title %}
+{% block content %}
+    <div class="middle-box text-center loginscreen   animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">Indlu</h1>
+
+            </div>
+            <h3>Rejestracja do Indlu</h3>
+            <p>Utwórz konto aby mieć dostęp do wszystki opcji.</p>
+            <form class="m-t" role="form" action="login.html">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Name" required="">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" required="">
+                </div>
+                <div class="form-group">
+                        <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Akceptuje regulamin i politykę prywatności </label></div>
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b">Rejestruj</button>
+
+                <p class="text-muted text-center"><small>Masz już konto?</small></p>
+                <a class="btn btn-sm btn-white btn-block" href="{% url 'account_login' %}">Zaloguj</a>
+            </form>
+            <p class="m-t"> <small>Indlu.pl  &copy; 2015</small> </p>
+        </div>
+    </div>
+
+{% endblock content %}

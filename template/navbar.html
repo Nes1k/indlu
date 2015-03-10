@@ -1,0 +1,59 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element"> 
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear"> 
+                            <span class="block m-t-xs"> 
+                                <strong class="font-bold">{{request.user.first_name}} {{request.user.last_name}}</strong>
+                            </span>
+                            <span class="text-muted text-xs block">
+                                Menu<b class="caret"></b>
+                            </span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="{% url 'customer_profile' %}">Dane użytkownika</a></li>
+                        <li><a href="{% url 'account_logout' %}">Wyloguj się</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    INDLU
+                </div>
+            </li>
+            {# Menu użytkownika #}
+            <li>
+                <a href="/"><i class="fa fa-search"></i> <span class="nav-label">Szukaj</span> </a>
+            </li>
+            <li>
+                <a href="{% url 'search_panel' %}"><i class="fa fa-tachometer"></i> <span class="nav-label">Panel użytkownika</span> </a>
+            </li>
+            <li>
+                <a href="{% url 'list_favourites' %}"><i class="fa fa-heart-o"></i> <span class="nav-label">Ulubione</span> </a>
+            </li>
+            <li>
+                <a href="/"><i class="fa fa-building-o"></i><span class="nav-label">Nieruchomości</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" aria-expanded="true">
+                    <li><a href="{% url 'all_building' %}">Wszystkie</a></li>
+                    <li><a href="{% url 'add_building' %}">Dodaj</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/"><i class="fa fa-users"></i> <span class="nav-label">Wynajem</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" aria-expanded="true">
+                    <li><a href="/">Ogłoszenia</a></li>
+                    <li><a href="/">Zarządzanie</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/"><i class="fa fa-comments-o"></i> <span class="nav-label">Wiadomości</span> </a>
+            </li>
+            <li>
+                <a href="/"><i class="fa fa-life-ring"></i> <span class="nav-label">Kontakt</span> </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+

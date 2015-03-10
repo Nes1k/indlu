@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}
+	{{title}}
+{% endblock title %}
+{% load staticfiles %}
+{% block content %}
+<div class="row">
+    {% for building in buildings  %}
+    <div class="col-md-6">
+        <div class="contact-box">
+            <a href="{% url 'edit_building' building.id %}"></a>
+            <div class="col-sm-6">
+                <div class="text-center">
+                    <img alt="image" class="img-rounded m-t-xs img-responsive" src="{{building.get_image_url}}">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <h3><strong>{{building.name}} </strong></h3>
+                <p>
+                    <i class="fa fa-map-marker"></i> {{building.city}}, {{building.street_address}} 
+                </p>
+                Typ budynku: {{building.buidling_type}}<br>
+                Powierzchnia: {{building.area}}<br>
+                Ilość pomieszczeń: {{building.room_count}} <br>
+                Stan: Urzywany <br>
+                <a href="{% url 'delete_building' building.id %}">
+                    <button class="btn btn-danger btn-circle pull-right"><i class="fa fa-times"></i></button>
+                </a>
+                {% if not building.advertisement %}
+                    <a href="{% url 'add_advertisement' building.id %}">
+                        <button class="btn btn-success btn-circle pull-right"><i class="fa fa-reply"></i></button>
+                    </a>
+                {% endif %}
+                <a href="{% url 'manage_building' building.id %}">
+                    <button class="btn btn-primary btn-circle pull-right"><i class="fa fa-tachometer"></i></button>  
+                </a>
+                <a href="{% url 'edit_building' building.id %}">
+                    <button class="btn btn-info btn-circle pull-right"><i class="fa fa-pencil"></i></button>  
+                </a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-xs-12 text-center">
+        <h2 class="text-thin">Nie posiadzasz w naszym systemie żadnych mieszkań.</h2>
+        <p>
+            Dodaj mieszkanie aby móc nim zarządzać: wystawiać do wynajmu lub na sprzedarz.<br><br>
+            <a href="{% url 'add_building' %}"><button type="button" class="btn btn-info">Dodaj mieszkanie</button></a>
+        </p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
