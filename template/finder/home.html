@@ -10,12 +10,12 @@
 	<form action="" method="GET" role="form">
 		<div class="row">
 			{% for field in form  %}
-				<div class="col-xs-6 col-sm-3">
+				<div class="col-xs-12 col-sm-3">
 					<label>{% if forloop.counter == 1 %}<i class="fa fa-location-arrow"></i>{% endif %}{{field.label}} </label>
 					{{field}}
 				</div>
 			{% endfor %}
-				<div class="col-xs-6 col-sm-3">
+				<div class="col-xs-12 col-sm-3">
 					<label></label>
 					<button type="submit" class="btn btn-info btn-block">Szukaj</button>
 				</div>	
