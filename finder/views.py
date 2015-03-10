@@ -54,13 +54,11 @@ def search_panel(request):
     stats = Stats.objects.filter(city=preferences.city)[25:]
     places = Place.objects.filter(preferences=preferences)
     offers = Offer.objects.filter(user=request.user)
-
-    advertisement = Advertisement.objects.filter(
-        building__city__startswith=preferences.city)
+    # TODO: Add support for matching advertisement
 
     return render(request, 'finder/search_panel.html',
                   {'preferences_form': preferences_form, 'stats': stats,
-                   'places': places, 'offers': offers, 'advertisement': advertisement})
+                   'places': places, 'offers': offers})
 
 
 def add_place(request):
