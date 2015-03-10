@@ -64,15 +64,15 @@ class Rooms(models.Model):
 
 class Building(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    country = models.CharField(max_length=120, choices=COUNTRIES)
-    street_address = models.CharField(max_length=120)
-    postal_code = models.CharField(max_length=120)
-    city = models.CharField(max_length=120)
-    buidling_type = models.CharField(max_length=120, choices=BUILDING_TYPE)
-    name = models.CharField(max_length=120)
+    country = models.CharField(max_length=120, choices=COUNTRIES, verbose_name="Kraj")
+    street_address = models.CharField(max_length=120, verbose_name='Ulica')
+    postal_code = models.CharField(max_length=120, verbose_name='Kod pocztowy')
+    city = models.CharField(max_length=120, verbose_name='Miasto')
+    buidling_type = models.CharField(max_length=120, choices=BUILDING_TYPE, verbose_name='Typ budynku')
+    name = models.CharField(max_length=120, verbose_name='Nazwa budynku')
     area = models.DecimalField(
-        default=0, blank=False, max_digits=4, decimal_places=2)
-    total_places = models.IntegerField(default=0)
+        default=0, blank=False, max_digits=4, decimal_places=2, verbose_name='Powieżchnia')
+    total_places = models.IntegerField(default=0, verbose_name='Liczba miejsc')
     location = gis_models.PointField(
         'longitude/latitude', geography=True, blank=True, null=True)
 
