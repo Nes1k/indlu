@@ -18,14 +18,14 @@ RATE_OF_PAY = (
 
 
 class Advertisement(models.Model):
-    building = models.OneToOneField(Building)
+    building = models.OneToOneField(Building, verbose_name='Nieruchomość')
     type_advertisement = models.CharField(
         max_length=120, choices=TYPE_AD, verbose_name='Typ')
     payment = models.CharField(
         max_length=120, choices=RATE_OF_PAY, verbose_name='Rozliczanie')
     price = models.IntegerField(default=0, verbose_name='Cena')
     free_places = models.IntegerField(default=0)
-    image = models.ForeignKey(RoomImage)
+    image = models.ForeignKey(RoomImage, verbose_name='Zdjęcie')
 
     def save(self, *args, **kwargs):
         rooms = self.building.rooms_set.all()
@@ -52,9 +52,9 @@ class Advertisement(models.Model):
 
 
 class Offer(models.Model):
-    advertisement = models.ForeignKey(Advertisement)
+    advertisement = models.ForeignKey(Advertisement, verbose_name='Ogłoszenie')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    accepted = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=False, verbose_name='Zaakceptowane')
 
     def __str__(self):
         return '%s' % self.user.first_name
