@@ -29,16 +29,16 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomerUser(AbstractBaseUser, PermissionsMixin):
-    country = models.CharField(max_length=50, choices=COUNTRIES)
-    street = models.CharField(max_length=60)
-    postal_code = models.CharField(max_length=6)
-    city = models.CharField(max_length=60)
+    country = models.CharField(max_length=50, choices=COUNTRIES, verbose_name='Kraj')
+    street = models.CharField(max_length=60, verbose_name='Ulica')
+    postal_code = models.CharField(max_length=6, verbose_name='Kod pocztowy')
+    city = models.CharField(max_length=60, verbose_name='Miasto')
     email = models.EmailField(blank=False, unique=True)
-    phone = models.CharField(max_length=15, blank=True, null=True)
+    phone = models.CharField(max_length=15, blank=True, null=True, verbose_name='Numer telefonu')
     first_name = models.CharField(
-        max_length=40, blank=True, null=True, unique=False)
+        max_length=40, blank=True, null=True, unique=False, verbose_name='Imie')
     last_name = models.CharField(
-        max_length=40, blank=True, null=True, unique=False)
+        max_length=40, blank=True, null=True, unique=False, verbose_name='Nazwisko')
     is_admin = models.BooleanField(default=False)
     data_joined = models.DateTimeField(auto_now_add=True)
 

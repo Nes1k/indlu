@@ -29,7 +29,7 @@ class AdvertisementForm(forms.ModelForm):
                     break
             if not total:
                 self.add_error(
-                    None, 'Pomieszczenie które Dodałeś nie mają wolnych miejsc.')
+                    None, 'Pomieszczenie które dodałeś nie mają wolnych miejsc.')
             if not image:
                 self.add_error(
                     None, 'Dodaj zdjęcie aby móc umieścić ogłoszenie.')

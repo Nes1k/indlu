@@ -10,6 +10,7 @@ from stats.models import Stats
 
 
 def home(request):
+    # TODO: Make easier finder
     advertisement = Advertisement.objects.all()
     form = SearchForm(data=request.GET)
     if request.GET.get('city'):
