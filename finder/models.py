@@ -18,7 +18,7 @@ class Preferences(models.Model):
     city = models.CharField(
         max_length=120, blank=True, null=True, verbose_name='Miasto')
     places = models.IntegerField(
-        default=0, blank=True, null=True, choices=PLACES, verbose_name='City')
+        default=0, blank=True, null=True, choices=PLACES, verbose_name='Liczba miejsc')
     buidling_type = models.CharField(
         max_length=120, choices=BUILDING_TYPE, blank=True, null=True, verbose_name='Typ budynku')
     payment = models.CharField(

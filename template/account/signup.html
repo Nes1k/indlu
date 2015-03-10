@@ -10,15 +10,17 @@
             </div>
             <h3>Rejestracja do Indlu</h3>
             <p>Utwórz konto aby mieć dostęp do wszystki opcji.</p>
-            <form class="m-t" role="form" action="login.html">
+            <form class="m-t" method="POST" role="form" action="{% url 'account_signup' %}">
+                {{form.error}}
+                {% csrf_token %}
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Name" required="">
+                    <input class="form-control" id="id_email" name="email" placeholder="Adres e-mail" type="email" />
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Email" required="">
+                    <input class="form-control" id="id_password1" name="password1" placeholder="Hasło" type="password" />
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" required="">
+                    <input class="form-control" id="id_password2" name="password2" placeholder="Hasło" type="password" />
                 </div>
                 <div class="form-group">
                         <div class="checkbox i-checks"><label> <input type="checkbox"><i></i> Akceptuje regulamin i politykę prywatności </label></div>
