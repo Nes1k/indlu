@@ -9,9 +9,19 @@
                 <h5>Miejsce preferencje</h5>
             </div>
             <div class="ibox-content">
+                <div class="col-sm-12">
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">{{form.non_field_errors}}</div>
+                    {% endif %}
+                </div>
                 <form action="" method="POST" role="form">{% csrf_token %}
                 {% for field in form  %}
                     <div class="row">
+                        <div class="col-sm-12">
+                            {% if field.errors %}
+                                <div class="alert alert-danger">{{field.errors}}</div>
+                            {% endif %}
+                        </div>
                         <label class="col-sm-4">{{field.label}}</label>
                         <div class="col-sm-8">
                             {{field}}

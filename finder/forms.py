@@ -34,7 +34,7 @@ class PlaceForm(forms.ModelForm):
 
         if location is None:
             raise forms.ValidationError(
-                'Niestety nie potrafimy wskazać podanej lokalizacji nieruchomości.')
+                'Niestety nie potrafimy wskazać podanej lokalizacji.')
 
     class Meta:
         model = Place
