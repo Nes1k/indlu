@@ -15,10 +15,10 @@
             <p>Zaloguj się aby skorzystać z wszystkich opcji inldu.</p>
             <form role="form" data-parsley-validate="" novalidate="" class="m-t" method="POST" action="{% url 'account_login' %}">{% csrf_token %}
                 <div class="form-group">
-                    <input name="login" type="email" class="form-control" placeholder="Username" required="">
+                    <input name="login" type="email" class="form-control" placeholder="Username" value="a@a.com" required="">
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" class="form-control" placeholder="Password" required="">
+                    <input type="password" name="password" class="form-control" placeholder="Password" value="qwe" required="">
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">Zaloguj</button>
 
